@@ -287,6 +287,37 @@ static void setSysLang(webs_t wp, char_t *path, char_t *query)
 }
 
 /*
+ * goform/setSystemSettings
+ */
+static void setSystemSettings(webs_t wp, char_t *path, char_t *query)
+{
+	char_t  *submitUrl = websGetVar(wp, T("submit-url"), T(""));
+
+    char *time;
+	time = websGetVar(wp, T("Time_Upload_Interval"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Time_Upload_Interval", time);
+
+    char *apk_update_url;
+	apk_update_url = websGetVar(wp, T("Apk_Update_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Apk_Update_Url", apk_update_url);
+
+    char *firstte_assistant_update_url;
+	firstte_assistant_update_url = websGetVar(wp, T("Firstte_Assistant_Update_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Firstte_Assistant_Update_Url", firstte_assistant_update_url);
+
+    char *log_record_upload_url;
+	log_record_upload_url = websGetVar(wp, T("Log_Record_Upload_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Log_Record_Upload_Url", log_record_upload_url);
+
+    char *firmware_update_url;
+	firmware_update_url = websGetVar(wp, T("Firmware_Update_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Firmware_Update_Url", firmware_update_url);
+	nvram_commit(RT2860_NVRAM);
+
+    websRedirect(wp, submitUrl);
+}
+
+/*
  * goform/NTP
  */
 static void NTP(webs_t wp, char_t *path, char_t *query)
@@ -1276,6 +1307,7 @@ void formDefineManagement(void)
 #endif
 	websFormDefine(T("setSysAdm"), setSysAdm);
 	websFormDefine(T("setSysLang"), setSysLang);
+	websFormDefine(T("setSystemSettings"), setSystemSettings);
 	websFormDefine(T("NTP"), NTP);
 #ifdef CONFIG_DATE
 	websFormDefine(T("NTPSyncWithHost"), NTPSyncWithHost);

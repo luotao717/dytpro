@@ -22,6 +22,52 @@ function reloadfileCheck()
 	return true;
 }
 
+function addrCheck()
+{
+	if (!isBlankMsg(document.SystemSettings.Firmware_Update_Url.value, MM_firmware_update_url)) {
+		return false;
+    }
+	
+	return true;
+}
+
+function log_record_upload_url_Check()
+{
+	if (!isBlankMsg(document.SystemSettings.Log_Record_Upload_Url.value, MM_log_record_upload_url)) {
+		return false;
+    }
+	
+	return true;
+}
+
+function firstte_assistant_url_Check()
+{
+	if (!isBlankMsg(document.SystemSettings.Firstte_Assistant_Update_Url.value, MM_firstte_assistant_update_url)) {
+		return false;
+    }
+	
+	return true;
+}
+
+function apk_update_url_Check()
+{
+    if (!isBlankMsg(document.SystemSettings.Apk_Update_Url.value, MM_apk_update_url)) {
+        return false;
+    }
+	
+	return true;
+}
+
+function numCheck()
+{
+	if (!isNumberRange(document.SystemSettings.Time_Upload_Interval.value, 1, 7200))  {
+        alert(MM_time_upload_interval + JS_msg120);
+		return false;
+    }
+    else	
+	    return true;
+}
+
 function resetClick()
 {
 	if ( !confirm(JS_msg11) )
@@ -68,6 +114,40 @@ function rebootClick()
     <td class="thead"><script>dw(MM_load_factory_default)</script>:</td>
     <td><script>dw('<input type="submit" class=button3 value="'+BT_restore_default+'" name="LoadDefault" onClick="return resetClick()">')</script></td>
   </tr>
+</form>
+
+<form method="post" name="SystemSettings" action="/goform/setSystemSettings">
+<input type="hidden" name="submit-url" value="/adm/settings.asp">
+<tr>
+  <td class="thead"><script>dw(MM_firmware_update_url)</script>:</td>
+  <td><input type="text" size="30" name="Firmware_Update_Url" value="<% getCfgGeneral(1, "Firmware_Update_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return addrCheck()">')</script>
+</td>
+</tr>
+
+
+<tr>
+  <td class="thead"><script>dw(MM_log_record_upload_url)</script>:</td>
+  <td><input type="text" size="30" name="Log_Record_Upload_Url" value="<% getCfgGeneral(1, "Log_Record_Upload_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return log_record_upload_url_Check()">')</script>
+</td>
+</tr>
+
+<tr>
+  <td class="thead"><script>dw(MM_firstte_assistant_update_url)</script>:</td>
+  <td><input type="text" size="30" name="Firstte_Assistant_Update_Url" value="<% getCfgGeneral(1, "Firstte_Assistant_Update_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return firstte_assistant_url_Check()">')</script>
+</td>
+</tr>
+
+<tr>
+  <td class="thead"><script>dw(MM_apk_update_url)</script>:</td>
+  <td><input type="text" size="30" name="Apk_Update_Url" value="<% getCfgGeneral(1, "Apk_Update_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return apk_update_url_Check()">')</script>
+</td>
+</tr>
+
+<tr>
+  <td class="thead"><script>dw(MM_time_upload_interval)</script>:</td>
++  <td><input type="text" size="5" name="Time_Upload_Interval" value="<% getCfgGeneral(1, "Time_Upload_Interval"); %>"><script>dw(MM_sec)</script>&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" name="update" onClick="return numCheck()">')</script>
+</td>
+</tr>
 </form>
 
 <form method="post" name="RebootSystem" action="/goform/RebootSystem">
