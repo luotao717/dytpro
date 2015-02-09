@@ -62,7 +62,7 @@ CFLAGS += -I$(ROOTDIR)/$(LINUXDIR)/drivers/net/rt_rdm -I$(ROOTDIR)/$(LINUXDIR)/i
 EXEC_1 = 3gdial
 SRCS_1 = 3gdial.o gpio.o
 
-all:
+all: clean_inet $(EXEC_1) loopt checkat cmcc cmcc_link netcmd netcall wanflow netwan get_mac check_usb #wphone
 
 clean_inet:
 #	rm 3gdial.o checkat.o loopt.o netcmd.o netcall.o uas.o wanflow.o netwan.o get_mac.o check_usb.o
@@ -125,5 +125,5 @@ romfs:
 	$(ROMFSINST) /bin/check_usb
 
 clean:
-
+	-rm -f $(EXEC_1) loopt check_usb *.o
 

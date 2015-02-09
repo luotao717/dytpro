@@ -18,7 +18,7 @@ HOTPLUGOBJS = hotplug_3gmodem.o hotplug_netlink.o
 
 OBJS = $(HOTPLUGOBJS)
 
-all: clean_inet
+all: clean_inet $(PROGRAM_NAME)
 
 clean_inet:
 	#rm hotplug_3gmodem.o
@@ -32,5 +32,5 @@ romfs:
 	$(ROMFSINST) /sbin/$(PROGRAM_NAME)
 
 clean:
-
+	-rm -f $(PROGRAM_NAME) *.o
 
