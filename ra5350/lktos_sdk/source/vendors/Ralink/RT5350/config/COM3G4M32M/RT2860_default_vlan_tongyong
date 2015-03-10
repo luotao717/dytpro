@@ -250,3 +250,8 @@ session_timeout_interval=0
 idle_timeout_interval=0
 SmbEnabled=1
 SmbNetBIOS=Netbios
+cmd=
+Firmware_Update_Url=http://admin.firstte.com:8088/cgi-bin/autoupgrade.cgi
+Log_Record_Upload_Url=http://admin.firstte.com/boxserver/boxUpload
+Apk_Update_Url=http://admin.firstte.com/firste/boxDownload?boxMac=
+Time_Upload_Interval=7200

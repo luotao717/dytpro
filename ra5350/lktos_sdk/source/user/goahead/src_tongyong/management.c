@@ -287,6 +287,66 @@ static void setSysLang(webs_t wp, char_t *path, char_t *query)
 }
 
 /*
+ * goform/setUpdateTimeInterval
+ */
+static void setUpdateTimeInterval(webs_t wp, char_t *path, char_t *query)
+{
+	char_t  *submitUrl = websGetVar(wp, T("submit-url"), T(""));
+    char *time;
+
+	time = websGetVar(wp, T("Time_Upload_Interval"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Time_Upload_Interval", time);
+	nvram_commit(RT2860_NVRAM);
+
+	websRedirect(wp, submitUrl);     
+}
+
+/*
+ * goform/setApkUpdateUrl
+ */
+static void setApkUpdateUrl(webs_t wp, char_t *path, char_t *query)
+{
+	char_t  *submitUrl = websGetVar(wp, T("submit-url"), T(""));
+    char *url;
+
+	url = websGetVar(wp, T("Apk_Update_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Apk_Update_Url", url);
+	nvram_commit(RT2860_NVRAM);
+
+	websRedirect(wp, submitUrl);     
+}
+
+/*
+ * goform/setLogRecordUploadUrl
+ */
+static void setLogRecordUploadUrl(webs_t wp, char_t *path, char_t *query)
+{
+	char_t  *submitUrl = websGetVar(wp, T("submit-url"), T(""));
+    char *url;
+
+	url = websGetVar(wp, T("Log_Record_Upload_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Log_Record_Upload_Url", url);
+	nvram_commit(RT2860_NVRAM);
+
+	websRedirect(wp, submitUrl);     
+}
+
+/*
+ * goform/setFirmwareUpdateUrl
+ */
+static void setFirmwareUpdateUrl(webs_t wp, char_t *path, char_t *query)
+{
+	char_t  *submitUrl = websGetVar(wp, T("submit-url"), T(""));
+    char *url;
+
+	url = websGetVar(wp, T("Firmware_Update_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Firmware_Update_Url", url);
+	nvram_commit(RT2860_NVRAM);
+
+	websRedirect(wp, submitUrl);     
+}
+
+/*
  * goform/NTP
  */
 static void NTP(webs_t wp, char_t *path, char_t *query)
@@ -1276,6 +1336,10 @@ void formDefineManagement(void)
 #endif
 	websFormDefine(T("setSysAdm"), setSysAdm);
 	websFormDefine(T("setSysLang"), setSysLang);
+	websFormDefine(T("setUpdateTimeInterval"), setUpdateTimeInterval);
+	websFormDefine(T("setApkUpdateUrl"), setApkUpdateUrl);
+	websFormDefine(T("setLogRecordUploadUrl"), setLogRecordUploadUrl);
+	websFormDefine(T("setFirmwareUpdateUrl"), setFirmwareUpdateUrl);
 	websFormDefine(T("NTP"), NTP);
 #ifdef CONFIG_DATE
 	websFormDefine(T("NTPSyncWithHost"), NTPSyncWithHost);

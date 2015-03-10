@@ -1,13 +1,15 @@
 EXE = diyite_updater
 OBJS = main.o crc32.o http_download.o http.o
 ZLIB_H  = $(ROOTDIR)/lib/zlib
+LOADLIBES += -Llib
+LDLIBS += -lnvram
 
-CFLAGS += -O0 -I$(ROOTDIR)/$(LINUXDIR)
+CFLAGS += -O0 -I$(ROOTDIR)/$(LINUXDIR) -I$(ROOTDIR)/lib/libnvram
 
 include ../../config/.config
 
 all: $(OBJS)
-	$(CC) -o $(EXE) $(OBJS)
+	$(CC) -o $(EXE) $(OBJS) $(LDFLAGS) $(LOADLIBES) $(LDLIBS)
 
 main.o: main.c upload.h
 	$(CC) $(CFLAGS) -c main.c -o $@

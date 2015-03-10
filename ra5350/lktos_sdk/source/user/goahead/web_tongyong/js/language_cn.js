@@ -560,6 +560,7 @@ var JS_msg116 = "必须是一个合法的MAC地址，并且不允许是广播MAC
 var JS_msg117 = "必须是一个合法的IP地址，格式如192.168.100.100";
 var JS_msg118 = "必须是一个合法的掩耳盗铃码地址，格式如255.255.255.0";
 var JS_msg119 = "起始IP地址不能大于结束IP地址！";
+var JS_msg120 = "必须是1-120之间的数字！";
 //----------------------------------
 var JS_msg_stainfo = "在本页面可以显示当前无线状态与连接到该AP的无线客户端。";
 var JS_msg_lan = "本页面用于设置局域网内的参数，即连接上AP LAN端口的本地网络。你可以设置IP地址、子网掩码、DHCP等参数。";
@@ -674,3 +675,7 @@ var MM_dlna29 = "所有的媒体类型";
 var MM_dlna30	= "仅音频";
 var MM_dlna31	= "仅视频";
 var MM_dlna32	= "仅图片";
+var MM_firmware_update_url = "系统更新地址";
+var MM_log_record_upload_url = "下载记录上传地址";
+var MM_apk_update_url = "APK更新地址";
+var MM_time_upload_interval = "下载记录上传时间间隔";
