@@ -317,6 +317,21 @@ static void setApkUpdateUrl(webs_t wp, char_t *path, char_t *query)
 }
 
 /*
+ * goform/setFirstteAssistantUpdateUrl
+ */
+static void setFirstteAssistantUpdateUrl(webs_t wp, char_t *path, char_t *query)
+{
+	char_t  *submitUrl = websGetVar(wp, T("submit-url"), T(""));
+    char *url;
+
+	url = websGetVar(wp, T("Firstte_Assistant_Update_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Firstte_Assistant_Update_Url", url);
+	nvram_commit(RT2860_NVRAM);
+
+	websRedirect(wp, submitUrl);     
+}
+
+/*
  * goform/setLogRecordUploadUrl
  */
 static void setLogRecordUploadUrl(webs_t wp, char_t *path, char_t *query)
@@ -1338,6 +1353,7 @@ void formDefineManagement(void)
 	websFormDefine(T("setSysLang"), setSysLang);
 	websFormDefine(T("setUpdateTimeInterval"), setUpdateTimeInterval);
 	websFormDefine(T("setApkUpdateUrl"), setApkUpdateUrl);
+	websFormDefine(T("setFirstteAssistantUpdateUrl"), setFirstteAssistantUpdateUrl);
 	websFormDefine(T("setLogRecordUploadUrl"), setLogRecordUploadUrl);
 	websFormDefine(T("setFirmwareUpdateUrl"), setFirmwareUpdateUrl);
 	websFormDefine(T("NTP"), NTP);

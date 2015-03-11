@@ -677,5 +677,6 @@ var MM_dlna31	= "仅视频";
 var MM_dlna32	= "仅图片";
 var MM_firmware_update_url = "系统更新地址";
 var MM_log_record_upload_url = "下载记录上传地址";
+var MM_firstte_assistant_update_url = "第一特助手更新地址";
 var MM_apk_update_url = "APK更新地址";
 var MM_time_upload_interval = "下载记录上传时间间隔";

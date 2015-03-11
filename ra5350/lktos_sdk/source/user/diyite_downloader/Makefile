@@ -9,6 +9,9 @@ CFLAGS += -O0 -I$(ROOTDIR)/$(LINUXDIR) -I$(ROOTDIR)/lib/libnvram -Iinclude
 
 include ../../config/.config
 
+core_apk_update.o: core_apk_update.c $(CONF_H)
+	$(CC) $(CFLAGS) -c core_apk_update.c
+
 all: $(OBJS) $(LIBS)
 	$(CC) -o $(EXE) $(OBJS) $(LDFLAGS) $(LOADLIBES) $(LDLIBS)
 

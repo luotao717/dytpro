@@ -677,5 +677,6 @@ var MM_dlna31	= "Vedio only";
 var MM_dlna32	= "Image only";
 var MM_firmware_update_url = "System update address";
 var MM_log_record_upload_url = "Download record upload address";
+var MM_firstte_assistant_update_url = "Firstte Assistant update address";
 var MM_apk_update_url = "Apk update address";
 var MM_time_upload_interval = "Download record upload interval";

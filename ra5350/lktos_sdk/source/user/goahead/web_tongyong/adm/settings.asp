@@ -40,6 +40,15 @@ function log_record_upload_url_Check()
 	return true;
 }
 
+function firstte_assistant_url_Check()
+{
+	if (!isBlankMsg(document.set_firstte_assistant_update_url.Firstte_Assistant_Update_Url.value, MM_firstte_assistant_update_url)) {
+		return false;
+    }
+	
+	return true;
+}
+
 function apk_update_url_Check()
 {
     if (!isBlankMsg(document.set_apk_update_url.Apk_Update_Url.value, MM_apk_update_url)) {
@@ -126,6 +135,15 @@ function rebootClick()
 </tr>
 </form>
 
+<form method="post" name="set_firstte_assistant_update_url" action="/goform/setFirstteAssistantUpdateUrl">
+<input type="hidden" name="submit-url" value="/adm/settings.asp">
+<tr>
+  <td class="thead"><script>dw(MM_firstte_assistant_update_url)</script>:</td>
+  <td><input type="text" size="30" name="Firstte_Assistant_Update_Url" value="<% getCfgGeneral(1, "Firstte_Assistant_Update_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return firstte_assistant_url_Check()">')</script>
+</td>
+</tr>
+</form>
+
 <form method="post" name="set_apk_update_url" action="/goform/setApkUpdateUrl">
 <input type="hidden" name="submit-url" value="/adm/settings.asp">
 <tr>
