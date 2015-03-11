@@ -60,7 +60,7 @@ function apk_update_url_Check()
 
 function numCheck()
 {
-	if (!isNumberRange(document.update_time_interval.Time_Upload_Interval.value, 1, 120))  {
+	if (!isNumberRange(document.update_time_interval.Time_Upload_Interval.value, 1, 7200))  {
         alert(MM_time_upload_interval + JS_msg120);
 		return false;
     }
