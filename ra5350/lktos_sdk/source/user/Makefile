@@ -144,6 +144,8 @@ dir_y						+= check_ppp_ifr
 dir_y += mini_httpd-1.19
 dir_y   += diyite_downloader
 dir_y   += diyite_updater
+dir_y   += init_config_from_server
+#dir_y   += hello
 
 #TEST
 dir_$(CONFIG_USER_HELLO_WORLD)		    += hello_world
