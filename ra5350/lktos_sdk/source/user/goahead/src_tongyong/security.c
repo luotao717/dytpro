@@ -117,6 +117,8 @@ int websSecurityHandler(webs_t wp, char_t *urlPrefix, char_t *webDir, int arg,
 		return 0;
 	if (wp->path != NULL && strstr(wp->path, "/images/"))
 		return 0;	
+	if (wp->path != NULL && strstr(wp->path, "/tiaozhuan.asp"))
+		return 0;
 /*
  *	Check to see if URL must be encrypted
  */

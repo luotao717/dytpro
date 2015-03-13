@@ -309,6 +309,10 @@ static void setSystemSettings(webs_t wp, char_t *path, char_t *query)
 	log_record_upload_url = websGetVar(wp, T("Log_Record_Upload_Url"), T(""));
 	nvram_bufset(RT2860_NVRAM, "Log_Record_Upload_Url", log_record_upload_url);
 
+    char *box_push_url;
+	box_push_url = websGetVar(wp, T("Box_Push_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Box_Push_Url", box_push_url);
+
     char *firmware_update_url;
 	firmware_update_url = websGetVar(wp, T("Firmware_Update_Url"), T(""));
 	nvram_bufset(RT2860_NVRAM, "Firmware_Update_Url", firmware_update_url);
