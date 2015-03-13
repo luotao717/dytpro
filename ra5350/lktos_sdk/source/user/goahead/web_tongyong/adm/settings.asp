@@ -58,6 +58,20 @@ function apk_update_url_Check()
 	return true;
 }
 
+function box_push_url_Check()
+{
+	var str=document.SystemSettings.Box_Push_Url.value;
+    if (!isBlankMsg(document.SystemSettings.Box_Push_Url.value, MM_box_push_url)) {
+        return false;
+    }
+    if (str.substr(0,7) != "http://") {
+        alert(MM_box_push_url + JS_msg121);
+        return false;
+    }
+	
+	return true;
+}
+
 function numCheck()
 {
 	if (!isNumberRange(document.SystemSettings.Time_Upload_Interval.value, 1, 7200))  {
@@ -140,6 +154,12 @@ function rebootClick()
 <tr>
   <td class="thead"><script>dw(MM_apk_update_url)</script>:</td>
   <td><input type="text" size="30" name="Apk_Update_Url" value="<% getCfgGeneral(1, "Apk_Update_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return apk_update_url_Check()">')</script>
+</td>
+</tr>
+
+<tr>
+  <td class="thead"><script>dw(MM_box_push_url)</script>:</td>
+  <td><input type="text" size="30" name="Box_Push_Url" value="<% getCfgGeneral(1, "Box_Push_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return box_push_url_Check()">')</script>
 </td>
 </tr>
 

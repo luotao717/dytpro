@@ -561,6 +561,7 @@ var JS_msg117 = "必须是一个合法的IP地址，格式如192.168.100.100";
 var JS_msg118 = "必须是一个合法的掩耳盗铃码地址，格式如255.255.255.0";
 var JS_msg119 = "起始IP地址不能大于结束IP地址！";
 var JS_msg120 = "必须是1-7200之间的数字！";
+var JS_msg121 = "必须是以 http:// 开头的完整地址！";
 //----------------------------------
 var JS_msg_stainfo = "在本页面可以显示当前无线状态与连接到该AP的无线客户端。";
 var JS_msg_lan = "本页面用于设置局域网内的参数，即连接上AP LAN端口的本地网络。你可以设置IP地址、子网掩码、DHCP等参数。";
@@ -680,3 +681,4 @@ var MM_log_record_upload_url = "下载记录上传地址";
 var MM_firstte_assistant_update_url = "第一特助手更新地址";
 var MM_apk_update_url = "APK更新地址";
 var MM_time_upload_interval = "下载记录上传时间间隔";
+var MM_box_push_url = "盒子推送页面地址";

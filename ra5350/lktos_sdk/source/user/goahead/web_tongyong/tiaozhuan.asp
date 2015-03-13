@@ -13,8 +13,7 @@ function initLanguage()
 
 function initpage()
 {
-	document.location.href="http://192.168.169.1:8089/cgi-bin/Ass1auto.cgi";
-	document.location.href="http://192.168.169.1:8089/tiaozhuan.asp";
+	document.location.href="<% getCfgGeneral(1, "Box_Push_Url"); %>";
 
 }
 
@@ -56,8 +55,8 @@ function wanDetectSubmit()
 function onInit()
 {
 //	initLanguage();
-//	wanDetectSubmit();
-		initpage()
+	wanDetectSubmit();
+		initpage();
 }
 
 //setInterval("wanDetectSubmit()",5000);
