@@ -10,7 +10,7 @@
 
 
 //当前固件版本
-#define SYSTEM_FIIRMWARE_VERSION	101
+#define SYSTEM_FIIRMWARE_VERSION	15
 //查询新版本接口
 //#define GET_FIRMWARE_VERSION_URL "http://admin.firstte.com:8088/cgi-bin/autoupgrade.cgi"
 //查询间隔 默认30分钟
@@ -252,7 +252,7 @@ int getUpgradeVersion(char* firmwareFileUrl)
 
 		sscanf(pData,"%d %s", &serverVersion, firmwareFileUrl);
 	}
-
+    
 	return serverVersion;
 }
 
