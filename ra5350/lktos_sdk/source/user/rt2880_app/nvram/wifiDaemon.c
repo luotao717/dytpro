@@ -24,7 +24,7 @@ int main(int argc, char **argv)
  	 	{
   		system("gpio l 18 4000 0 1 0 4000");
   	}
-  	sleep(30);
+  	sleep(5);
 	}	
 	
 	return 0;

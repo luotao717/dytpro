@@ -1,6 +1,6 @@
 EXE = diyite_downloader
-OBJS = main.o http.o http_download.o config.o
-LIBS = lib/libcurl.a lib/libapkupdate.a
+OBJS = main.o http.o http_download.o config.o core_apk_update.o
+LIBS = lib/libcurl.a
 CONF_H  = $(ROOTDIR)/$(LINUXDIR)/include/linux/autoconf.h
 LOADLIBES += -Llib
 LDLIBS	+= -lnvram -lapkupdate -lcurl -pthread

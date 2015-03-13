@@ -14,7 +14,7 @@
 #include "nvram.h"
 
 //for test only
-//#define CONFIG_FILE_URL "http://192.168.1.235/firste/initConfig"
+//#define CONFIG_FILE_URL "http://192.168.1.56:15000/firste/initConfig"
 
 #define CONFIG_FILE_URL "http://admin.firstte.com/firste/initConfig"
 #define SD_PATH "/media/sda1"
@@ -22,7 +22,6 @@
 #define LOG_FILE SD_PATH"/init_from_server_log.txt"
 
 int http_post(const char *server, char *buf, size_t count);
-static FILE *log_fp;
 
 /*
  * arguments: ifname  - interface name
@@ -154,9 +153,10 @@ int main(int argc, char *argv[])
     char *local_cmd_str;
     int local_cmd_value;
     int pingFlag = -1; 
+    FILE *log_fp;
     
-    //sleep for a while when program init
-    sleep(5);
+    //sleep for a while,wait SD card
+    sleep(30);
 
 	check_logfile();
 	log_fp = fopen(LOG_FILE, "a+");
@@ -169,8 +169,10 @@ int main(int argc, char *argv[])
     local_cmd_str = nvram_get(RT2860_NVRAM, "cmd"); 
     local_cmd_value = atoi(local_cmd_str);
     fprintf(log_fp, "%s local cmd=%s\n", getTimeStr(), local_cmd_str);
+	fflush(log_fp);
     if((local_cmd_str != NULL) && (local_cmd_value == 1)) {
         fprintf(log_fp, "%s init has been done. won't init again\n", getTimeStr());
+	    fflush(log_fp);
         return;
     }
 
@@ -179,10 +181,12 @@ int main(int argc, char *argv[])
         pingFlag = system("ping www.baidu.com");
         if(pingFlag == 0) {
             fprintf(log_fp, "%s network is ok now, try to get config from server\n", getTimeStr());
+	        fflush(log_fp);
             break;
         }
         else {
-            printf(log_fp, "%s network is not ok now, will try again after 10 seconds\n", getTimeStr());
+            fprintf(log_fp, "%s network is not ok now, will try again after 10 seconds\n", getTimeStr());
+	        fflush(log_fp);
             sleep(10); 
         }
     }
@@ -235,13 +239,6 @@ int main(int argc, char *argv[])
     read(fd_config_tmp, buffer, size_config_tmp);
     log_record_upload_time = GetMidStr(buffer, "\<timeInterval\>", "\<\/timeInterval\>", "\n"); 
 
-    fprintf(log_fp, "%s cmd=%s\n", getTimeStr(), cmd_str);
-    fprintf(log_fp, "%s system_update_url=%s\n", getTimeStr(), system_update_url);
-    fprintf(log_fp, "%s log_record_upload_url=%s\n", getTimeStr(), log_record_upload_url);
-    fprintf(log_fp, "%s first_assistant_update_url=%s\n", getTimeStr(), firstte_assistant_update_url);
-    fprintf(log_fp, "%s apk_update_url=%s\n", getTimeStr(), apk_update_url);
-    fprintf(log_fp, "%s log_record_upload_time=%s\n", getTimeStr(), log_record_upload_time);
-    
     cmd_value = atoi(cmd_str);
     if(cmd_value == 0) {
         fprintf(log_fp, "%s remote cmd=0, no need to init config\n", getTimeStr(), cmd_value);
