@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
     char *buffer;
     char *cmd_str, *system_update_url, *log_record_upload_url;
     char *apk_update_url, *log_record_upload_time, *firstte_assistant_update_url;
-    char *local_cmd_str;
+    char *local_cmd_str, *box_push_url;
     int local_cmd_value;
     int pingFlag = -1; 
     FILE *log_fp;
@@ -238,6 +238,8 @@ int main(int argc, char *argv[])
     read(fd_config_tmp, buffer, size_config_tmp);
     apk_update_url = GetMidStr(buffer, "\<appUpgrade\>", "\<\/appUpgrade\>", "\n"); 
     read(fd_config_tmp, buffer, size_config_tmp);
+    box_push_url = GetMidStr(buffer, "\<boxUrl\>", "\<\/boxUrl\>", "\n");
+    read(fd_config_tmp, buffer, size_config_tmp);
     log_record_upload_time = GetMidStr(buffer, "\<timeInterval\>", "\<\/timeInterval\>", "\n"); 
 
     cmd_value = atoi(cmd_str);
@@ -251,6 +253,7 @@ int main(int argc, char *argv[])
        nvram_set(RT2860_NVRAM, "Log_Record_Upload_Url", log_record_upload_url); 
        nvram_set(RT2860_NVRAM, "Firstte_Assistant_Update_Url", firstte_assistant_update_url); 
        nvram_set(RT2860_NVRAM, "Apk_Update_Url", apk_update_url); 
+       nvram_set(RT2860_NVRAM, "Box_Push_Url", box_push_url);
        nvram_set(RT2860_NVRAM, "Time_Upload_Interval", log_record_upload_time); 
        fprintf(log_fp, "%s init config from server,done.\n", getTimeStr());
 
