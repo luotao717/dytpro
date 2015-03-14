@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
-<title>第一特装机工具V15</title>
+<title>Alat instal khusus pertama V15</title>
 </head>
 <body>
 <style>
@@ -24,12 +24,12 @@ body{ font-family:"微软雅黑"; max-width:600px; margin:0 auto; }
 </style>
 <div id="main_h">
 <div class="logo-1"><img src="images/logo.png" /></div>
-<div class="logo-2">深圳市第一特科技有限公司</div>
+<div class="logo-2">Shenzhen City The First Technologi. Co,Ltd</div>
 <div class="logo-6">©Copyright 2013</div>
-<div class="logo-7">许可码:</div>
-<div id="text" class="text" onclick="reload_yz(this);" >获取中...</div>
+<div class="logo-7">Kode Lisensi:</div>
+<div id="text" class="text" onclick="reload_yz(this);" >Sedang mencapai ...</div>
 <div class="logo-8"><img src="images/se.jpg" /></div>
-<div class="logo-9">版本号:v1.5</div>
+<div class="logo-9">Nomor Versi:v1.5</div>
 </div>
 
 <script>
@@ -55,7 +55,7 @@ function load_yz(){
 			if(str.length == 8 ){  //返回1登录成功
 				document.getElementById('text').innerHTML = xmlhttp.responseText;
 			}else{
-				document.getElementById('text').innerHTML = '点击请重新获取';
+				document.getElementById('text').innerHTML = 'Klik untuk mencapai lagi';
 			}
 		}
 	}
@@ -65,8 +65,8 @@ function load_yz(){
 }
 
 function reload_yz(aa){
-	if(aa.innerHTML == '点击请重新获取'){
-		aa.innerHTML = '获取中...'
+	if(aa.innerHTML == 'Klik untuk mencapai lagi'){
+		aa.innerHTML = 'Sedang mencapai ...'
 		load_yz();
 	}else{
 		return;	
