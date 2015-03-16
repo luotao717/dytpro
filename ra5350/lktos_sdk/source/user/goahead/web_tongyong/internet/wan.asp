@@ -293,6 +293,7 @@ function formCheck()
 	}
 	else if (document.wanCfg.connectionType.value == "3G") //3G
 	{ 
+        alert(JS_msg122);
 	}
 	else
 		return false;

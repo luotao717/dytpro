@@ -562,6 +562,7 @@ var JS_msg118 = " must be a valid Subnet Mask address. e.g. 255.255.255.0";
 var JS_msg119 = "The start IP address can not greater than the end of the IP address.";
 var JS_msg120 = " must be a Number between 1-7200.";
 var JS_msg121 = " must start with http://";
+var JS_msg122 = " choose 3G model, the device will reboot automatically!";
 //----------------------------------
 var JS_msg_stainfo = "You could display current wireless status and monitor stations which associated to this AP here.";
 var JS_msg_lan = "This page is used to configure the parameters for local area network which connects to the LAN port of your Access Point. Here you may change the setting for IP addresss, subnet mask, DHCP, etc..";
