@@ -3523,6 +3523,8 @@ static void setWan(webs_t wp, char_t *path, char_t *query)
 		nvram_bufset(RT2860_NVRAM, "dial3gapn", apn);
 		nvram_bufset(RT2860_NVRAM, "dial3gsimpin", simpin);
 		nvram_bufset(RT2860_NVRAM, "wanConnectionMode", ctype);	
+	    nvram_commit(RT2860_NVRAM);
+		doSystem("reboot");
 	}
 #endif
 		else {
