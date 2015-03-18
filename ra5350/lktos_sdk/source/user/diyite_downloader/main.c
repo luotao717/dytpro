@@ -1373,7 +1373,7 @@ void setup_ntp()
 int main(int argc, char * argv[])
 {
 	//wait sd card mount complete 
-	sleep(30);
+	sleep(60);
 
 	setup_ntp();
 	check_logfile();
