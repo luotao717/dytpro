@@ -29,12 +29,13 @@ UPLOAD_WAPI_AS_CERT_CGI = upload_wapi_as_cert.cgi
 UPLOAD_WAPI_USER_CERT_CGI = upload_wapi_user_cert.cgi
 ASS1AUTO_CGI = Ass1auto.cgi
 GETVCODE_CGI = getvcode.cgi
+UPLOADLOG_CGI = uploadlog.cgi
 
 #RRDTOOL_CGIWARPPER = rrdtool_cgiwrapper.cgi
 #CPU_MEM_RRD_UPDATER	= cpu_mem_updater
 #NETWORK_RRD_UPDATER	= network_updater
 
-ALL_EXE = $(UPLOAD_CGI) $(UPLOAD_BOOTLOADER_CGI) $(UPLOAD_SETTINGS) $(RRDTOOL_CGIWARPPER) $(CPU_MEM_RRD_UPDATER) $(NETWORK_RRD_UPDATER) $(ASS1AUTO_CGI) $(GETVCODE_CGI)
+ALL_EXE = $(UPLOAD_CGI) $(UPLOAD_BOOTLOADER_CGI) $(UPLOAD_SETTINGS) $(RRDTOOL_CGIWARPPER) $(CPU_MEM_RRD_UPDATER) $(NETWORK_RRD_UPDATER) $(ASS1AUTO_CGI) $(GETVCODE_CGI) $(UPLOADLOG_CGI)
 ifeq ("$(CONFIG_USER_STORAGE)", "y")
 ALL_EXE += $(USB_UPGRADE_CGI)
 endif
@@ -65,6 +66,10 @@ $(ASS1AUTO_CGI): Ass1auto.cgi.o
 	$(STRIP) --remove-section=.note --remove-section=.comment $@
 $(GETVCODE_CGI): getvcode.cgi.o http.o
 	$(CC) $(CFLAGS) getvcode.cgi.o http.o $(LDLIBS) -o $@
+	$(STRIP) --remove-section=.note --remove-section=.comment $@
+
+$(UPLOADLOG_CGI): uploadlog.cgi.o urldecode.o
+	$(CC) $(CFLAGS) uploadlog.cgi.o urldecode.o -o $@
 	$(STRIP) --remove-section=.note --remove-section=.comment $@
 $(UPLOAD_CGI): upload.cgi.o crc32.o
 	$(CC) $(CFLAGS) crc32.o upload.cgi.o -o $@
@@ -114,6 +119,7 @@ romfs:
 	$(ROMFSINST) $(ROOT_DIRECTORY)/cgi-bin/$(UPLOAD_CGI)
 	$(ROMFSINST) $(ROOT_DIRECTORY)/cgi-bin/$(ASS1AUTO_CGI)
 	$(ROMFSINST) $(ROOT_DIRECTORY)/cgi-bin/$(GETVCODE_CGI)
+	$(ROMFSINST) $(ROOT_DIRECTORY)/cgi-bin/$(UPLOADLOG_CGI)
 	$(ROMFSINST) $(ROOT_DIRECTORY)/cgi-bin/$(UPLOAD_BOOTLOADER_CGI)
 	$(ROMFSINST) reboot.sh $(ROOT_DIRECTORY)/cgi-bin/reboot.sh
 #	$(ROMFSINST) $(RRDTOOL_CGIWARPPER) $(ROOT_DIRECTORY)/cgi-bin/$(RRDTOOL_CGIWARPPER)
