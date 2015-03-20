@@ -51,6 +51,9 @@ int main(int argc, char **argv)
                 printf("wan is not connected\n");
                 // set led to red right now
                 system("gpio l 18 0 4000 0 1 4000");
+                // restart dnsmasq when wan is not connect
+                system("killall dnsmasq");
+                system("dnsmasq");
             }
         }
     }
