@@ -259,6 +259,7 @@ int main(int argc, char *argv[])
 
        //once init config done, set local cmd a value, 1
        nvram_set(RT2860_NVRAM, "cmd", "1"); 
+       nvram_commit(RT2860_NVRAM);
     }
 
 	fprintf(log_fp, "%s end.\n", getTimeStr());
