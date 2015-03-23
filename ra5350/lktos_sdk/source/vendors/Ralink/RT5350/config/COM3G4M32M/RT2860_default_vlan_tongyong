@@ -256,6 +256,6 @@ cmd=
 Firstte_Assistant_Update_Url=http://admin.firstte.com:8088/cgi-bin/getapp.cgi
 Firmware_Update_Url=http://admin.firstte.com:8088/cgi-bin/autoupgrade.cgi
 Log_Record_Upload_Url=http://admin.firstte.com/boxserver/boxUpload
-Apk_Update_Url=http://admin.firstte.com/firste/boxDownload?boxMac=
+Apk_Update_Url=http://admin.firstte.com/firste/boxDownload?boxMac
 Time_Upload_Interval=7200
 Box_Push_Url=http://192.168.169.1:8089/cgi-bin/Ass1auto.cgi
