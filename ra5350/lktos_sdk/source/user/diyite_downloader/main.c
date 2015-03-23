@@ -73,6 +73,7 @@ struct apk_info
 	char *package_name;
 	char *file_path; 
 	char *icon_path;
+	char *idcollections;
 	time_t update_time;
 };
 
@@ -133,6 +134,15 @@ enum download_list_item {
 	DOWNLOAD_LIST_PACKAGE_NAME, 
 };
 
+enum download_list2_item {
+	DOWNLOAD_LIST2_SEQ, 
+	DOWNLOAD_LIST2_ID, 
+	DOWNLOAD_LIST2_NAME, 
+	DOWNLOAD_LIST2_SIZE,
+	DOWNLOAD_LIST2_ICON_URL,
+	DOWNLOAD_LIST2_IDCOLLECTIONS, 
+};
+
 enum local_list_item {
 	LOCAL_LIST_SEQ, 
 	LOCAL_LIST_ID, 
@@ -145,14 +155,33 @@ enum local_list_item {
 	LOCAL_LIST_PACKAGE_NAME, 
 };
 
+enum local_list2_item {
+	LOCAL_LIST2_SEQ, 
+	LOCAL_LIST2_ID, 
+	LOCAL_LIST2_SIZE, 
+	LOCAL_LIST2_NAME, 
+	LOCAL_LIST2_ICON, 
+	LOCAL_LIST2_IDCOLLECTIONS, 
+};
+
 inline int check_download_apk_info(struct apk_info *info)
 {
 	return info->id && info->name && info->icon_url && info->apk_url && info->version; // && info->package_name;
 }
 
+inline int check_idcollections_info(struct apk_info *info)
+{
+	return info->id && info->name && info->icon_url;
+}
+
 inline int check_local_apk_info(struct apk_info *info)
 {
 	return info->id && info->version && info->file_path && info->name && info->icon_path; // && info->package_name;
+}
+
+inline int check_local_idcollections_info(struct apk_info *info)
+{
+	return info->id && info->name && info->icon_path;
 }
 
 inline void apk_info_free(struct apk_info *info)
@@ -187,6 +216,10 @@ inline void apk_info_free(struct apk_info *info)
 	if (info->file_path) {
 		free(info->file_path);
 		info->file_path = NULL;
+	}
+	if (info->idcollections) {
+		free(info->idcollections);
+		info->idcollections = NULL;
 	}
 	if (info->icon_path) {
 		free(info->icon_path);
@@ -238,6 +271,11 @@ inline int apk_info_copy(struct apk_info *dest, struct apk_info *src)
 		if (errno)
 			goto error;
 	}
+	if (src->idcollections) {
+		dest->idcollections = strdup(src->idcollections);
+		if (errno)
+			goto error;
+	}
 	if (src->icon_path) {
 		dest->icon_path = strdup(src->icon_path);
 		if (errno)
@@ -278,64 +316,127 @@ error:
 	return errno;
 }
 
+int parse_item_amount(char *buffer) {
+    int item_amount;
+    char *saveptr_tmp = NULL;
+    char *tok_tmp = NULL;
+    for(tok_tmp = strtok_r(buffer, "\t\n", &saveptr_tmp), item_amount = 0; tok_tmp; tok_tmp = strtok_r(NULL, "\t\n", &saveptr_tmp), ++item_amount) {
+        ;// need to do nothing, just count item_num
+    }
+    return item_amount;
+}
+
 int parse_download_file(struct apk_info *info, char *line)
 {
 	enum download_list_item item = DOWNLOAD_LIST_SEQ;
+	enum download_list2_item item2 = DOWNLOAD_LIST2_SEQ;
+    int item_amount = 0;
 	char *tok = NULL;
 	char *saveptr = NULL;
 	apk_info_free(info);
 	errno = 0;
-	for(tok = strtok_r(line, "\t\n", &saveptr), item = DOWNLOAD_LIST_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item) {
-		switch(item) {
-			case DOWNLOAD_LIST_SEQ:
-				info->seq = strtoul(tok, NULL, 0);
-				break;
-			case DOWNLOAD_LIST_ID:
-				info->id = strdup(tok);
-				break;
-			case DOWNLOAD_LIST_NAME:
-				info->name = strdup(tok);
-				break;
-			case DOWNLOAD_LIST_SIZE:
-				info->size = strtoul(tok, NULL, 0);
-				break;
-			case DOWNLOAD_LIST_ICON_URL:
-				info->icon_url = strdup(tok);
-				break;
-			case DOWNLOAD_LIST_APK_URL:
-				info->apk_url = strdup(tok);
-				break;
-			case DOWNLOAD_LIST_VERSION:
-				info->version = strdup(tok);
-				break;
-			case DOWNLOAD_LIST_VERSION_CODE:
-				info->version_code = strtol(tok, NULL, 0);
-				break;
-			case DOWNLOAD_LIST_PACKAGE_NAME:
-				info->package_name = strdup(tok);
-				break;
-			default:
-				if (strcmp(tok, "\n"))
-					fprintf(log_fp, "%s %s:%d parse softlist error!\n", getTimeStr(), __FILE__, __LINE__);
-				break;
-		}
-		if (errno)
-			goto error;
-	}
+    char *buffer;
+    buffer = strdup(line);
+    
+    // count item nums from the download list file
+    item_amount = parse_item_amount(buffer);
+    //fprintf(log_fp, "leung add item amount=%d\n", item_amount);
+    fflush(log_fp);
+    if(item_amount == 9) {
+        for(tok = strtok_r(line, "\t\n", &saveptr), item = DOWNLOAD_LIST_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item) {
+            switch(item) {
+                case DOWNLOAD_LIST_SEQ:
+                    info->seq = strtoul(tok, NULL, 0);
+                    break;
+                case DOWNLOAD_LIST_ID:
+                    info->id = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST_NAME:
+                    info->name = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST_SIZE:
+                    info->size = strtoul(tok, NULL, 0);
+                    break;
+                case DOWNLOAD_LIST_ICON_URL:
+                    info->icon_url = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST_APK_URL:
+                    info->apk_url = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST_VERSION:
+                    info->version = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST_VERSION_CODE:
+                    info->version_code = strtol(tok, NULL, 0);
+                    break;
+                case DOWNLOAD_LIST_PACKAGE_NAME:
+                    info->package_name = strdup(tok);
+                    break;
+                default:
+                    if (strcmp(tok, "\n")) {
+                        fprintf(log_fp, "%s %s:%d parse softlist error!\n", getTimeStr(), __FILE__, __LINE__);
+                        fflush(log_fp);
+                    }
+                    break;
+            }
+            if (errno)
+                goto error;
+        }
+        // apk file path
+        char *tmp = NULL;
+        tmp = strdup(info->name);
+        if (errno)
+            goto error;
+        str_replace(tmp, ' ', '_');
+        info->file_path = malloc(strlen(APK_PATH) + strlen(info->id) + strlen(tmp) + 7);
+        if (errno)
+            goto error;
+        sprintf(info->file_path, "%s/%s/%s.apk", APK_PATH, info->id, tmp);
+        free(tmp);
+    }
+    else if(item_amount == 6) {
+        //fprintf(log_fp, "leung add, go into item amount=6\n");
+        //fprintf(log_fp, "leung add, line in item_amount=%s\n", line);
+        //fflush(log_fp);
+        for(tok = strtok_r(line, "\t\n", &saveptr), item2 = DOWNLOAD_LIST2_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item2) {
+            switch(item2) {
+                case DOWNLOAD_LIST2_SEQ:
+                    info->seq = strtoul(tok, NULL, 0);
+                    break;
+                case DOWNLOAD_LIST2_ID:
+                    info->id = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST2_NAME:
+                    info->name = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST2_SIZE:
+                    info->size = strtoul(tok, NULL, 0);
+                    break;
+                case DOWNLOAD_LIST2_ICON_URL:
+                    info->icon_url = strdup(tok);
+                    break;
+                case DOWNLOAD_LIST2_IDCOLLECTIONS:
+                    info->idcollections = strdup(tok);
+                    break;
+                default:
+                    if (strcmp(tok, "\n")) {
+                        fprintf(log_fp, "%s %s:%d parse softlist error!\n", getTimeStr(), __FILE__, __LINE__);
+                        fflush(log_fp);
+                    }
+                    break;
+            }
+            if (errno)
+                goto error;
+        }
+    }
+    else {
+        return 1;
+    }
 
-	// apk file path
-	char *tmp = NULL;
-	tmp = strdup(info->name);
-	if (errno)
-		goto error;
-	str_replace(tmp, ' ', '_');
-	info->file_path = malloc(strlen(APK_PATH) + strlen(info->id) + strlen(tmp) + 7);
-	if (errno)
-		goto error;
-	sprintf(info->file_path, "%s/%s/%s.apk", APK_PATH, info->id, tmp);
-	free(tmp);
-
+    //fprintf(log_fp, "leung add, start parse icon path\n");
+    //fflush(log_fp);
 	// icon file path
+    char *tmp = NULL;
 	tmp = strdup(info->icon_url);
 	if (errno)
 		goto error;
@@ -346,21 +447,30 @@ int parse_download_file(struct apk_info *info, char *line)
 	else 
 		icon_name = last_slash + 1;
 	info->icon_path = malloc(strlen(APK_PATH) + strlen(info->id) + strlen(icon_name) + 3);
+    //fprintf(log_fp, "leung add, malloc icon path done\n");
+    //fflush(log_fp);
 	if (errno)
 		goto error;
 	sprintf(info->icon_path, "%s/%s/%s", APK_PATH, info->id, icon_name);
 	free(tmp);
+    //fprintf(log_fp, "leung add, parse icon path done\n");
+    //fflush(log_fp);
 
 	info->update_time = time(NULL);
 
-	return 0;
+    if(item_amount == 9)
+	    return 9;
+    else if(item_amount == 6)
+        return 6;
 
 error:
 	if (tmp)
 		free(tmp);
 	
-	if (errno)
+	if (errno) {
 		fprintf(log_fp, "%s:%d parse download error:%d\n", __FILE__, __LINE__, errno);
+        fflush(log_fp);
+    }
 
 	apk_info_free(info);
 	return errno;
@@ -369,49 +479,94 @@ error:
 int parse_local_file(struct apk_info *info, char *line)
 {
 	enum local_list_item item = LOCAL_LIST_SEQ;
+	enum local_list2_item item2 = LOCAL_LIST2_SEQ;
+    int item_amount = 0;
 	char * tok = NULL;
+	char *field_data = NULL;
 	char *saveptr = NULL;
+	char *field_ptr = NULL;
 	apk_info_free(info);
 	errno = 0;
-	for(tok = strtok_r(line, "\t\n", &saveptr), item = LOCAL_LIST_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item) {
-		switch(item) {
-			case LOCAL_LIST_SEQ:
-				info->seq = strtoul(tok, NULL, 0);
-				break;
-			case LOCAL_LIST_ID:
-				info->id = strdup(tok);
-				break;
-			case LOCAL_LIST_SIZE:
-				info->size = strtoul(tok, NULL, 0);
-				break;
-			case LOCAL_LIST_VERSION:
-				info->version = strdup(tok);
-				break;
-			case LOCAL_LIST_FILE:
-				info->file_path = strdup(tok);
-				break;
-			case LOCAL_LIST_NAME:
-				info->name = strdup(tok);
-				break;
-			case LOCAL_LIST_ICON:
-				info->icon_path = strdup(tok);
-				break;
-			case LOCAL_LIST_VERSION_CODE:
-				info->version_code = strtol(tok, NULL, 0);
-				break;
-			case LOCAL_LIST_PACKAGE_NAME:
-				info->package_name = strdup(tok);
-				break;
-			default:
-				if (strcmp(tok, "\n"))
-					fprintf(log_fp, "%s %s:%d parse softlist error!\n", getTimeStr(), __FILE__, __LINE__);
-				break;
-		}
-		if (errno)
-			goto error;
-	}
+
+    // count item nums from the local list file
+    item_amount = parse_item_amount(line);
+    //fprintf(log_fp, "leung add local item amount=%d\n", item_amount);
+    //fflush(log_fp);
+    if(item_amount == 9) {
+        for(tok = strtok_r(line, "\t\n", &saveptr), item = LOCAL_LIST_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item) {
+            switch(item) {
+                case LOCAL_LIST_SEQ:
+                    info->seq = strtoul(tok, NULL, 0);
+                    break;
+                case LOCAL_LIST_ID:
+                    info->id = strdup(tok);
+                    break;
+                case LOCAL_LIST_SIZE:
+                    info->size = strtoul(tok, NULL, 0);
+                    break;
+                case LOCAL_LIST_VERSION:
+                    info->version = strdup(tok);
+                    break;
+                case LOCAL_LIST_FILE:
+                    info->file_path = strdup(tok);
+                    break;
+                case LOCAL_LIST_NAME:
+                    info->name = strdup(tok);
+                    break;
+                case LOCAL_LIST_ICON:
+                    info->icon_path = strdup(tok);
+                    break;
+                case LOCAL_LIST_VERSION_CODE:
+                    info->version_code = strtol(tok, NULL, 0);
+                    break;
+                case LOCAL_LIST_PACKAGE_NAME:
+                    info->package_name = strdup(tok);
+                    break;
+                default:
+                    if (strcmp(tok, "\n"))
+                        fprintf(log_fp, "%s %s:%d parse softlist error!\n", getTimeStr(), __FILE__, __LINE__);
+                    break;
+            }
+            if (errno)
+                goto error;
+        }
+    }
+    else if(item_amount == 6) {
+        for(tok = strtok_r(line, "\t\n", &saveptr), item = LOCAL_LIST2_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item) {
+            switch(item) {
+                case LOCAL_LIST2_SEQ:
+                    info->seq = strtoul(tok, NULL, 0);
+                    break;
+                case LOCAL_LIST2_ID:
+                    info->id = strdup(tok);
+                    break;
+                case LOCAL_LIST2_SIZE:
+                    info->size = strtoul(tok, NULL, 0);
+                    break;
+                case LOCAL_LIST2_NAME:
+                    info->name = strdup(tok);
+                    break;
+                case LOCAL_LIST2_ICON:
+                    info->icon_path = strdup(tok);
+                    break;
+                case LOCAL_LIST2_IDCOLLECTIONS:
+                    info->idcollections = strdup(tok);
+                    break;
+                default:
+                    if (strcmp(tok, "\n"))
+                        fprintf(log_fp, "%s %s:%d parse softlist error!\n", getTimeStr(), __FILE__, __LINE__);
+                    break;
+            }
+            if (errno)
+                goto error;
+        }
+    }
 	info->update_time = time(NULL);
-	return 0;
+
+    if(item_amount == 9)
+        return 9;
+    else if(item_amount == 6)
+        return 6;
 
 error:
 	apk_info_free(info);
@@ -531,23 +686,35 @@ static int write_local_soft_file()
 	qsort(soft_list.base, soft_list.nmember, soft_list.size, apkcmp);
 	
 	FILE * temp_softlist_fp = fopen(TEMP_SOFT_LIST, "w");
-	for (soft_list_index = 0; soft_list_index < soft_list.nmember; ++soft_list_index) {
-		fprintf(temp_softlist_fp, "%lu\t%s\t%lu\t%s\t%s\t%s\t%s"
-				, apk_list_ptr[soft_list_index].seq
-				, apk_list_ptr[soft_list_index].id
-				, apk_list_ptr[soft_list_index].size
-				, apk_list_ptr[soft_list_index].version
-				, apk_list_ptr[soft_list_index].file_path 
-				, apk_list_ptr[soft_list_index].name 
-				, apk_list_ptr[soft_list_index].icon_path);
-		if (apk_list_ptr[soft_list_index].version_code != -1 
-				&& apk_list_ptr[soft_list_index].package_name) {
-			fprintf(temp_softlist_fp, "\t%d\t%s\n"
-					, apk_list_ptr[soft_list_index].version_code
-					, apk_list_ptr[soft_list_index].package_name);
-		} else
-			fprintf(temp_softlist_fp, "\n");
-	}
+    for (soft_list_index = 0; soft_list_index < soft_list.nmember; ++soft_list_index) {
+        if(apk_list_ptr[soft_list_index].idcollections) {
+            fprintf(temp_softlist_fp, "%lu\t%s\t%lu\t%s\t%s\t%s\n"
+                    , apk_list_ptr[soft_list_index].seq
+                    , apk_list_ptr[soft_list_index].id
+                    , apk_list_ptr[soft_list_index].size
+                    , apk_list_ptr[soft_list_index].name 
+                    , apk_list_ptr[soft_list_index].icon_path
+                    , apk_list_ptr[soft_list_index].idcollections);
+        }
+        else {
+            fprintf(temp_softlist_fp, "%lu\t%s\t%lu\t%s\t%s\t%s\t%s"
+                    , apk_list_ptr[soft_list_index].seq
+                    , apk_list_ptr[soft_list_index].id
+                    , apk_list_ptr[soft_list_index].size
+                    , apk_list_ptr[soft_list_index].version
+                    , apk_list_ptr[soft_list_index].file_path 
+                    , apk_list_ptr[soft_list_index].name 
+                    , apk_list_ptr[soft_list_index].icon_path);
+            if (apk_list_ptr[soft_list_index].version_code != -1 
+                    && apk_list_ptr[soft_list_index].package_name) {
+                fprintf(temp_softlist_fp, "\t%d\t%s\n"
+                        , apk_list_ptr[soft_list_index].version_code
+                        , apk_list_ptr[soft_list_index].package_name);
+            } 
+            else
+                fprintf(temp_softlist_fp, "\n");
+        }
+    }
 	fclose(temp_softlist_fp);
 	rename(TEMP_SOFT_LIST, SOFT_LIST".lst");
 }
@@ -572,13 +739,21 @@ int init_soft_list()
 	if (soft_list_fp = fopen(soft_list_file, "r")) {
 		char * line_buff = NULL;
 		size_t line_size = 0;
+        int parse_ret = 0;
 		while(getline(&line_buff, &line_size, soft_list_fp) != -1) {
 			memset(&((struct apk_info *)soft_list.base)[soft_list.nmember], 0, sizeof(struct apk_info));
-			if (parse_local_file(&((struct apk_info *)soft_list.base)[soft_list.nmember], line_buff))
+            parse_ret = parse_local_file(&((struct apk_info *)soft_list.base)[soft_list.nmember], line_buff);
+			if(parse_ret != 9 && parse_ret != 6)
 				continue;
-
-			if (!check_local_apk_info(&((struct apk_info *)soft_list.base)[soft_list.nmember]))
-				continue;
+    
+            if(parse_ret == 9) {
+                if (!check_local_apk_info(&((struct apk_info *)soft_list.base)[soft_list.nmember]))
+                    continue;
+            }
+            else if(parse_ret == 6) {
+                if (!check_local_idcollections_info(&((struct apk_info *)soft_list.base)[soft_list.nmember]))
+                    continue;
+            }
 
 			if (((struct apk_info *)soft_list.base)[soft_list.nmember].version_code == -1) { 
 				if (get_version_code(((struct apk_info *)soft_list.base)[soft_list.nmember].id, 
@@ -937,14 +1112,22 @@ inline int record_local_apk(struct apk_info *find, struct apk_info *info)
 int update_apk(char *line)
 {
 	int ret = 0;
-
+    int parse_ret = 0;
 	struct apk_info info = {0};
 	char *apk_path = NULL;
-	if (parse_download_file(&info, line))
+
+    parse_ret = parse_download_file(&info, line);
+	if (parse_ret != 9 && parse_ret != 6)
 		goto end;
 
-	if (!check_download_apk_info(&info))
-		goto end;
+    if(parse_ret == 9) {
+        if (!check_download_apk_info(&info))
+            goto end;
+    }
+    else if(parse_ret == 6) {
+        if (!check_idcollections_info(&info))
+            goto end;
+    }
 
 	apk_path = malloc(strlen(APK_PATH) + strlen(info.id) + 2);
 	sprintf(apk_path, "%s/%s", APK_PATH, info.id);
@@ -963,35 +1146,52 @@ int update_apk(char *line)
 
 	struct apk_info *find = NULL;
 	find = find_apk_info(info.id);
-	
-	if (find && find->version_code >= info.version_code) {
-		if (strcmp(find->file_path, info.file_path))
-			rename(find->file_path, info.file_path);
 
-		if (strcmp(find->icon_path, info.icon_path)) {
-			if (!download_file(info.icon_url, info.icon_path))
-				unlink(find->icon_path);
-			else
-				rename(find->icon_path, info.icon_path);
-		}
-	} else {
-		if (find) {
-			unlink(find->file_path);
-			unlink(find->icon_path);
-		}
-		if (!download_file(info.apk_url, info.file_path) 
-				&& !check_apk_size(info.file_path, info.size) 
-				&& !download_file(info.icon_url, info.icon_path)) {
-			fprintf(log_fp, "%s %s:%d update apk, id : %s, name : %s\n", getTimeStr(), __FILE__, __LINE__, info.id, info.name);
+    if(parse_ret == 9) {
+        if (find && find->version_code >= info.version_code) {
+            if (strcmp(find->file_path, info.file_path))
+                rename(find->file_path, info.file_path);
 
-		} else {
-			ret = -1;
-			record_download_status(1);
-			unlink(info.file_path);
-			unlink(info.icon_path);
-			goto end;
-		}
-	}
+            if (strcmp(find->icon_path, info.icon_path)) {
+                if (!download_file(info.icon_url, info.icon_path))
+                    unlink(find->icon_path);
+                else
+                    rename(find->icon_path, info.icon_path);
+            }
+        } else {
+            if (find) {
+                unlink(find->file_path);
+                unlink(find->icon_path);
+            }
+            if (!download_file(info.apk_url, info.file_path) 
+                    && !check_apk_size(info.file_path, info.size) 
+                    && !download_file(info.icon_url, info.icon_path)) {
+                fprintf(log_fp, "%s %s:%d update apk, id : %s, name : %s\n", getTimeStr(), __FILE__, __LINE__, info.id, info.name);
+
+            } else {
+                ret = -1;
+                record_download_status(1);
+                unlink(info.file_path);
+                unlink(info.icon_path);
+                goto end;
+            }
+        }
+    }
+    else if(parse_ret == 6) {
+        if(find) {
+            unlink(find->icon_path);
+        }
+        if(!download_file(info.icon_url, info.icon_path)) {
+            fprintf(log_fp, "%s %s:%d update idcollections, id : %s, name : %s\n", getTimeStr(), __FILE__, __LINE__, info.id, info.name);
+
+        } else {
+            ret = -1;
+            record_download_status(1);
+            unlink(info.icon_path);
+            goto end;
+        }
+
+    }
 	record_local_apk(find, &info);
 
 end:
@@ -1008,12 +1208,30 @@ int mark_apk(char *line)
 {
 	struct apk_info info = {0};
 	char *apk_path = NULL;
-
-	if (parse_download_file(&info, line))
+    int parse_ret = 0;
+    parse_ret = parse_download_file(&info, line);
+        fprintf(log_fp, "parse_ret=%d\n", parse_ret);
+	    fflush(log_fp);
+	if (parse_ret != 9 && parse_ret != 6) {
+        fprintf(log_fp, "in mark_apk parse_download_file failed\n");
+	    fflush(log_fp);
 		goto end;
-
-	if (!check_download_apk_info(&info))
-		goto end;
+    }
+    
+    if(parse_ret == 9) {
+        if (!check_download_apk_info(&info)) {
+            fprintf(log_fp, "in mark_apk check download apk info failed\n");
+            fflush(log_fp);
+            goto end;
+        }
+    }
+    else if(parse_ret == 6) {
+        if (!check_idcollections_info(&info)) {
+            fprintf(log_fp, "in mark_apk check idcollections info failed\n");
+            fflush(log_fp);
+            goto end;
+        }
+    }
 
 	apk_path = malloc(strlen(APK_PATH) + strlen(info.id) + 2);
 	sprintf(apk_path, "%s/%s", APK_PATH, info.id);
@@ -1083,7 +1301,7 @@ int get_apk_list_url(char* url_buf, int buf_size)
 
     char *APK_LIST_BY_MAC_URL = nvram_get(RT2860_NVRAM, "Apk_Update_Url");
 	char * url = malloc(strlen(APK_LIST_BY_MAC_URL) + strlen(mac) + 1);
-	sprintf(url, "%s%s", APK_LIST_BY_MAC_URL, mac);
+	sprintf(url, "%s=%s", APK_LIST_BY_MAC_URL, mac);
 
 	return http_get(url, url_buf, buf_size, 0);
 }
@@ -1091,6 +1309,8 @@ int get_apk_list_url(char* url_buf, int buf_size)
 int check_apk_list()
 {
 	FILE * apk_list_fp = fopen(DOWN_LOAD_FILE, "r");
+    fprintf(log_fp, "open apk_list.tmp start.\n");
+	fflush(log_fp);
 	if (apk_list_fp)
 	{
 		time_t timestamp = time(NULL);
@@ -1100,9 +1320,12 @@ int check_apk_list()
 		size_t line_size = 0;
 		while(getline(&line_buff, &line_size, apk_list_fp) != -1)
 		{
+            fprintf(log_fp, "mark_apk start.\n");
+	        fflush(log_fp);
 			mark_apk(line_buff);
 		}
-
+        fprintf(log_fp, "mark_apk done.\n");
+	    fflush(log_fp);
 		fclose(apk_list_fp);
 		if (line_buff)
 			free(line_buff);
@@ -1135,7 +1358,8 @@ int update()
 
 	if (http_download(url_buf, DOWN_LOAD_FILE) >= 0)
 	{
-		//printf("update start\n");
+		fprintf(log_fp, "update start\n");
+	    fflush(log_fp);
 		FILE * apk_list_fp = fopen(DOWN_LOAD_FILE, "r");
 		if (apk_list_fp)
 		{
@@ -1150,8 +1374,12 @@ int update()
 //			fclose(temp_local_apk_list_fp);
 
 			// check which apk need to delete
+		    fprintf(log_fp, "check apk list start\n");
+	        fflush(log_fp);
 			check_apk_list();
 
+		    fprintf(log_fp, "check apk list done\n");
+	        fflush(log_fp);
 			// update apk
 			begin = time(NULL);
 			sleep(1);
