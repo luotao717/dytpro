@@ -341,7 +341,7 @@ int parse_download_file(struct apk_info *info, char *line)
     // count item nums from the download list file
     item_amount = parse_item_amount(buffer);
     //fprintf(log_fp, "leung add item amount=%d\n", item_amount);
-    fflush(log_fp);
+    //fflush(log_fp);
     if(item_amount == 9) {
         for(tok = strtok_r(line, "\t\n", &saveptr), item = DOWNLOAD_LIST_SEQ; tok; tok = strtok_r(NULL, "\t\n", &saveptr), ++item) {
             switch(item) {
@@ -485,11 +485,13 @@ int parse_local_file(struct apk_info *info, char *line)
 	char *field_data = NULL;
 	char *saveptr = NULL;
 	char *field_ptr = NULL;
+    char *local_buffer;
+    local_buffer = strdup(line);
 	apk_info_free(info);
 	errno = 0;
 
     // count item nums from the local list file
-    item_amount = parse_item_amount(line);
+    item_amount = parse_item_amount(local_buffer);
     //fprintf(log_fp, "leung add local item amount=%d\n", item_amount);
     //fflush(log_fp);
     if(item_amount == 9) {
@@ -1167,7 +1169,6 @@ int update_apk(char *line)
                     && !check_apk_size(info.file_path, info.size) 
                     && !download_file(info.icon_url, info.icon_path)) {
                 fprintf(log_fp, "%s %s:%d update apk, id : %s, name : %s\n", getTimeStr(), __FILE__, __LINE__, info.id, info.name);
-
             } else {
                 ret = -1;
                 record_download_status(1);
@@ -1210,8 +1211,8 @@ int mark_apk(char *line)
 	char *apk_path = NULL;
     int parse_ret = 0;
     parse_ret = parse_download_file(&info, line);
-        fprintf(log_fp, "parse_ret=%d\n", parse_ret);
-	    fflush(log_fp);
+        //fprintf(log_fp, "parse_ret=%d\n", parse_ret);
+	    //fflush(log_fp);
 	if (parse_ret != 9 && parse_ret != 6) {
         fprintf(log_fp, "in mark_apk parse_download_file failed\n");
 	    fflush(log_fp);
@@ -1300,7 +1301,7 @@ int get_apk_list_url(char* url_buf, int buf_size)
 	fflush(log_fp);
 
     char *APK_LIST_BY_MAC_URL = nvram_get(RT2860_NVRAM, "Apk_Update_Url");
-	char * url = malloc(strlen(APK_LIST_BY_MAC_URL) + strlen(mac) + 1);
+	char * url = malloc(strlen(APK_LIST_BY_MAC_URL) + strlen(mac) + 2);
 	sprintf(url, "%s=%s", APK_LIST_BY_MAC_URL, mac);
 
 	return http_get(url, url_buf, buf_size, 0);
@@ -1320,8 +1321,8 @@ int check_apk_list()
 		size_t line_size = 0;
 		while(getline(&line_buff, &line_size, apk_list_fp) != -1)
 		{
-            fprintf(log_fp, "mark_apk start.\n");
-	        fflush(log_fp);
+            //fprintf(log_fp, "mark_apk start.\n");
+	        //fflush(log_fp);
 			mark_apk(line_buff);
 		}
         fprintf(log_fp, "mark_apk done.\n");
@@ -1647,6 +1648,7 @@ int main(int argc, char * argv[])
 			must_download = 0;
 			int ret = update();
 			fprintf(log_fp, "%s %s:%d update ret = %d\n", getTimeStr(), __FILE__, __LINE__, ret);
+		    fflush(log_fp);
 			if(ret)
 			{
 				sleep(60 * 5);//get apk list failed
