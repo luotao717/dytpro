@@ -1574,9 +1574,9 @@ void check_logfile()
 	struct stat file_stat = {0};
 	if (!stat(LOG_FILE, &file_stat) && S_ISREG(file_stat.st_mode))
 	{
-		if (file_stat.st_size > 10*1024*1024)
+		if (file_stat.st_size > 1*1024*1024)
 		{
-			// larger than 10M, delete
+			// larger than 1M, delete
 			unlink(LOG_FILE);
 		}
 	}
