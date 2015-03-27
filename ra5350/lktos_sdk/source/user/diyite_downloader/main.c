@@ -1298,11 +1298,12 @@ int get_apk_list_url(char* url_buf, int buf_size)
 {
 	const char * mac = get_wifi_mac();
 	fprintf(log_fp, "%s %s:%d call get_apk_list_url mac = %s\n", getTimeStr(), __FILE__, __LINE__, mac);
-	fflush(log_fp);
 
     char *APK_LIST_BY_MAC_URL = nvram_get(RT2860_NVRAM, "Apk_Update_Url");
 	char * url = malloc(strlen(APK_LIST_BY_MAC_URL) + strlen(mac) + 2);
 	sprintf(url, "%s=%s", APK_LIST_BY_MAC_URL, mac);
+	fprintf(log_fp, "%s call get_apk_list_url = %s\n", getTimeStr(), url);
+	fflush(log_fp);
 
 	return http_get(url, url_buf, buf_size, 0);
 }
