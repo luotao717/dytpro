@@ -16,7 +16,7 @@
 //for test only
 //#define CONFIG_FILE_URL "http://192.168.1.56:15000/firste/initConfig"
 
-#define CONFIG_FILE_URL "http://admin.firstte.com/firste/initConfig"
+#define CONFIG_FILE_URL "http://mx1.indoapps1.com/firste/initConfig"
 #define SD_PATH "/media/sda1"
 #define CONFIG_FILE_TMP SD_PATH"/initconfig.tmp"
 #define LOG_FILE SD_PATH"/init_from_server_log.txt"
