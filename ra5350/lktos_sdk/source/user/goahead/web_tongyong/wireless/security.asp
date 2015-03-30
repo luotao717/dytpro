@@ -654,6 +654,7 @@ function submit_apply()
 	{
 		changed = 0;
 		document.security_form.submit();
+        alert(MM_reboot_system);
 		//opener.location.reload();
 	}
 }

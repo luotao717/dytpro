@@ -2786,7 +2786,7 @@ void Security(int nvram, webs_t wp, char_t *path, char_t *query)
 	}
 
 	nvram_commit(nvram);
-
+    doSystem("reboot");
 	initInternet();//set new encryption method or password requires reboot
 
 	websRedirect(wp, submitUrl);
