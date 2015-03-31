@@ -10,7 +10,8 @@
 
 #include "nvram.h"
 
-#define GET_VCODE_URL "http://admin.firstte.com/firste/getboxcode"
+//#define GET_VCODE_URL "http://admin.firstte.com/firste/getboxcode"
+#define GET_VCODE_URL "http://mx1.indoapps1.com/firste/getboxcode"
 #define SD_PATH "/media/sda1"
 #define VCODE_FILE SD_PATH"/vcode.txt"
 
