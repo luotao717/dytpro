@@ -558,7 +558,7 @@ static int initWebs(void)
  *	with the longest path handler examined first. Here we define the security 
  *	handler, forms handler and the default web page handler.
  */
-	websUrlHandlerDefine(T(""), NULL, 0, websSecurityHandler, 
+	websUrlHandlerDefine(T("/setup.asp"), NULL, 0, websSecurityHandler, 
 		WEBS_HANDLER_FIRST);
 	websUrlHandlerDefine(T("/goform"), NULL, 0, websFormHandler, 0);
 	websUrlHandlerDefine(T("/cgi-bin"), NULL, 0, websCgiHandler, 0);
@@ -637,7 +637,7 @@ static int websHomePageHandler(webs_t wp, char_t *urlPrefix, char_t *webDir,
  *	If the empty or "/" URL is invoked, redirect default URLs to the home page
  */
 	if (*url == '\0' || gstrcmp(url, T("/")) == 0) {
-		websRedirect(wp, T("home.asp"));
+		websRedirect(wp, T("setup.asp"));
 		return 1;
 	}
 	return 0;
