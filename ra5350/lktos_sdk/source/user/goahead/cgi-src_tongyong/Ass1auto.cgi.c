@@ -11,7 +11,7 @@ int main (int argc, char *argv[])
 		<head>\n\
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\
 		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\" >\n\
-		<title>No.1 Indoapps</title>\n\
+		<title>第一特装机工具</title>\n\
 		</head>\n");
 
 	// print body header
@@ -78,11 +78,11 @@ body{ font-family:\"微软雅黑\"; max-width:600px; margin:0 auto; }\n\
     </div>\n\
 </div>\n\
 <div class=\"logo-1\"><img src=\"../images/logo.png\" /></div>\n\
-<div class=\"logo-2\">No.1 Indoapps</div>\n\
-<div class=\"logo-3\">Ringkas, hijau ,aman , efisien</div>\n\
-<div class=\"logo-4\" id=\"logo-4\" onmousedown=\"s_bj()\"><a href='http://192.168.169.1/media/sda1/apk/firstteassitant.apk'>Klik unduh</a></div>\n\
-<div class=\"logo-5\">Unduh indoapps untuk mengakses internet gratis</div>\n\
-<div class=\"logo-6\" id=\"logo-6\" onmousedown=\"s_link()\"><img src=\"../images/about.png\" />Tetang kami</div>\n");
+<div class=\"logo-2\">第一特装机工具</div>\n\
+<div class=\"logo-3\">简洁·绿色·安全·快捷</div>\n\
+<div class=\"logo-4\" id=\"logo-4\" onmousedown=\"s_bj()\"><a href='http://192.168.169.1/media/sda1/apk/firstteassitant.apk'>点击下载</a></div>\n\
+<div class=\"logo-5\">下载第一特装机工具可提供免费上网</div>\n\
+<div class=\"logo-6\" id=\"logo-6\" onmousedown=\"s_link()\"><img src=\"../images/about.png\" /> 关于我们</div>\n");
 	
 	//print javascript
 	printf("\n\
