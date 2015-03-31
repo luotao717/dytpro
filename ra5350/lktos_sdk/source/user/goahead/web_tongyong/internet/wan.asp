@@ -189,6 +189,7 @@ function pptpOPModeSwitch()
 function formCheck()
 {
 	if (document.wanCfg.connectionType.value == "STATIC"){
+        alert(MM_reboot_system);
 		if (!isIpAddrMsg(document.wanCfg.staticIp.value, MM_ipaddr)) 
 			return false;
 		
@@ -213,11 +214,14 @@ function formCheck()
 			if (!isIpAddrMsg(document.wanCfg.staticSecDns.value, MM_secdns)) 
 				return false; 
 	}
-	else if (document.wanCfg.connectionType.value == "DHCP"){ 
-		if (!hostnameCheck(document.wanCfg.hostname, MM_hostname))
-			return false;
-	}
+    else if (document.wanCfg.connectionType.value == "DHCP"){ 
+        alert(MM_reboot_system);
+        if (!hostnameCheck(document.wanCfg.hostname, MM_hostname)) {
+            return false;
+        }
+    }
 	else if (document.wanCfg.connectionType.value == "PPPOE"){ 
+        alert(MM_reboot_system);
 		if (!isBlankMsg(document.wanCfg.pppoeUser.value, MM_username)) 
 			return false;
 		
