@@ -3544,6 +3544,7 @@ static void setWan(webs_t wp, char_t *path, char_t *query)
 		nvram_bufset(RT2860_NVRAM, "macCloneMac", clone_mac);
 
 	nvram_commit(RT2860_NVRAM);
+	doSystem("reboot");
 
 #if defined(CONFIG_RALINK_MT7620)
 	doSystem("lktos_networkconfig mtk7620 initwan");
