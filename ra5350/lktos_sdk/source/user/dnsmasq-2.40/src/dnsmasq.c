@@ -70,7 +70,7 @@ int main (int argc, char **argv)
   long i, max_fd = sysconf(_SC_OPEN_MAX);
 
    printf("\r\nping flag start=%d\r\n",pingFlag);
-   pingFlag=system("ping www.qq.com");
+   pingFlag=system("ping www.baidu.com");
    printf("\r\nping flag=%d\r\n",pingFlag);
    
   if( 0 != pingFlag)
