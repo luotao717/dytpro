@@ -38,7 +38,7 @@ int main(int argc, char **argv)
             if(p == NULL || (!strcmp(wanmode, "3G"))) {
                 printf("wan or 3G modem is connected\n");
                 // try to ping after wan is connected
-                pingFlag=system("ping www.qq.com");
+                pingFlag=system("ping www.baidu.com");
                 if( 0 != pingFlag) {
                     system("gpio l 18 0 4000 0 1 4000");
                 }
