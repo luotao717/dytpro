@@ -51,10 +51,22 @@ function Echange(nowthis,v_num){
     </tr>
     <tr>
         <td valign="top">
-			<div class="column"><a href="internet/wan.asp" target="mainFrame" onClick="Echange(this,0)"><script>dw(MM_network)</script></a></div>
+			<div class="column"><a href="adm/wizard2.asp" target="mainFrame" ><script>dw(MM_easywizard)</script></a></div>
+			<div class="column"><a href="internet/wan2.asp" target="mainFrame"><script>dw(MM_network)</script></a></div>
+          <!--div class="xiala" id="sj" style="display:none">
+              <ul>
+                <li><a href="internet/wan2.asp" target="mainFrame"><script>dw(MM_wan_settings)</script></a></li>        
+                <li><a href="internet/lan.asp" target="mainFrame"><script>dw(MM_lan_settings)</script></a></li>        
+              </ul>
+          </div-->
+		     <div class="column"><a href="wireless/macfilter.asp" target="mainFrame"><script>dw(MM_wireless)</script></a></div>
+		     <div class="column"><a href="adm/ntp.asp" target="mainFrame"><script>dw(MM_service_settings)</script></a></div>
+			<div class="column"><a href="adm/statistic.asp" target="mainFrame" onClick="Echange(this,0)"><script>dw(MM_management)</script></a></div>
           <div class="xiala" id="sj" style="display:none">
               <ul>
-                <li><a href="internet/wan.asp" target="mainFrame"><script>dw(MM_wan_settings)</script></a></li>        
+                <li><a href="adm/statistic.asp" target="mainFrame"><script>dw(MM_statistics)</script></a></li>        
+                <li><a href="adm/upload_firmware.asp" target="mainFrame"><script>dw(MM_firmware)</script></a></li>        
+                <li><a href="adm/password.asp" target="mainFrame"><script>dw(MM_admin_settings)</script></a></li>        
               </ul>
           </div>
          	
