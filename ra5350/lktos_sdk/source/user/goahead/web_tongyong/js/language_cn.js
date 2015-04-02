@@ -683,3 +683,5 @@ var MM_firstte_assistant_update_url = "第一特助手更新地址";
 var MM_apk_update_url = "APK更新地址";
 var MM_time_upload_interval = "下载记录上传时间间隔";
 var MM_box_push_url = "盒子推送页面地址";
+var MM_get_vcode_url = "验证码获取地址";
+var MM_config_file_url = "系统配置获取地址";

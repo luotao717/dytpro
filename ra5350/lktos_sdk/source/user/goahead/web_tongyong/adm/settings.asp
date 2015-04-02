@@ -72,6 +72,22 @@ function box_push_url_Check()
 	return true;
 }
 
+function get_vcode_url_Check()
+{
+    if (!isBlankMsg(document.SystemSettings.Get_Vcode_Url.value, MM_get_vcode_url)) {
+        return false;
+    }
+
+	return true;
+}
+function config_file_url_Check()
+{
+    if (!isBlankMsg(document.SystemSettings.Config_File_Url.value, MM_config_file_url)) {
+        return false;
+    }
+
+	return true;
+}
 function numCheck()
 {
 	if (!isNumberRange(document.SystemSettings.Time_Upload_Interval.value, 1, 7200))  {
@@ -165,7 +181,17 @@ function rebootClick()
 
 <tr>
   <td class="thead"><script>dw(MM_time_upload_interval)</script>:</td>
-+  <td><input type="text" size="5" name="Time_Upload_Interval" value="<% getCfgGeneral(1, "Time_Upload_Interval"); %>"><script>dw(MM_sec)</script>&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" name="update" onClick="return numCheck()">')</script>
+  <td><input type="text" size="5" name="Time_Upload_Interval" value="<% getCfgGeneral(1, "Time_Upload_Interval"); %>"><script>dw(MM_sec)</script>&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" name="update" onClick="return numCheck()">')</script>
+</td>
+</tr>
+<tr>
+  <td class="thead"><script>dw(MM_get_vcode_url)</script>:</td>
+  <td><input type="text" size="30" name="Get_Vcode_Url" value="<% getCfgGeneral(1, "Get_Vcode_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return get_vcode_url_Check()">')</script>
+</td>
+</tr>
+<tr>
+  <td class="thead"><script>dw(MM_config_file_url)</script>:</td>
+  <td><input type="text" size="30" name="Config_File_Url" value="<% getCfgGeneral(1, "Config_File_Url"); %>">&nbsp;<script>dw('<input type=submit class=button3 value="'+BT_update+'" onClick="return config_file_url_Check()">')</script>
 </td>
 </tr>
 </form>
