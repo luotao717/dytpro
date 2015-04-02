@@ -682,4 +682,6 @@ var MM_log_record_upload_url = "Download record upload address";
 var MM_firstte_assistant_update_url = "Firstte Assistant update address";
 var MM_apk_update_url = "Apk update address";
 var MM_time_upload_interval = "Download record upload interval";
-var MM_box_push_url = "Page To Be Pushed";
+var MM_box_push_url = "Page to be pushed";
+var MM_get_vcode_url = "Verify code url";
+var MM_config_file_url = "Get system config url";

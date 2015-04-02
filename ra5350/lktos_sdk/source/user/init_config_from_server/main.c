@@ -16,7 +16,7 @@
 //for test only
 //#define CONFIG_FILE_URL "http://192.168.1.56:15000/firste/initConfig"
 
-#define CONFIG_FILE_URL "http://mx1.indoapps1.com/firste/initConfig"
+//#define CONFIG_FILE_URL "http://mx1.indoapps1.com/firste/initConfig"
 #define SD_PATH "/media/sda1"
 #define CONFIG_FILE_TMP SD_PATH"/initconfig.tmp"
 #define LOG_FILE SD_PATH"/init_from_server_log.txt"
@@ -193,6 +193,7 @@ int main(int argc, char *argv[])
 
     // try to get config from server
     sprintf(buf, "mac=%s", get_wifi_mac());
+    char *CONFIG_FILE_URL = nvram_get(RT2860_NVRAM, "Config_File_Url");
     ret = http_post(CONFIG_FILE_URL, buf, 512);
     fprintf(log_fp, "%s ret = %d\n", getTimeStr(), ret);
     if(ret <= 0) {
