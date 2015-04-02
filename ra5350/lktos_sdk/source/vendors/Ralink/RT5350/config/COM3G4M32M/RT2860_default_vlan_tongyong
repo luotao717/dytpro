@@ -259,5 +259,5 @@ Log_Record_Upload_Url=http://admin.firstte.com/boxserver/boxUpload
 Apk_Update_Url=http://admin.firstte.com/firste/boxDownload?boxMac
 Time_Upload_Interval=7200
 Box_Push_Url=http://192.168.169.1:8089/cgi-bin/Ass1auto.cgi
-Get_Vcode_Url=http://mx1.indoapps1.com/firste/getboxcode
-Config_File_Url=http://mx1.indoapps1.com/firste/initConfig
+Get_Vcode_Url=http://admin.firstte.com/firste/getboxcode
+Config_File_Url=http://admin.firstte.com/firste/initConfig
