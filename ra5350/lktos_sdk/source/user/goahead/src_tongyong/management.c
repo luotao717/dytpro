@@ -313,6 +313,14 @@ static void setSystemSettings(webs_t wp, char_t *path, char_t *query)
 	box_push_url = websGetVar(wp, T("Box_Push_Url"), T(""));
 	nvram_bufset(RT2860_NVRAM, "Box_Push_Url", box_push_url);
 
+    char *get_vcode_url;
+	get_vcode_url = websGetVar(wp, T("Get_Vcode_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Get_Vcode_Url", get_vcode_url);
+
+    char *config_file_url;
+	config_file_url = websGetVar(wp, T("Config_File_Url"), T(""));
+	nvram_bufset(RT2860_NVRAM, "Config_File_Url", config_file_url);
+
     char *firmware_update_url;
 	firmware_update_url = websGetVar(wp, T("Firmware_Update_Url"), T(""));
 	nvram_bufset(RT2860_NVRAM, "Firmware_Update_Url", firmware_update_url);
