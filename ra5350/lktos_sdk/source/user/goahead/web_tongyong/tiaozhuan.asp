@@ -13,7 +13,8 @@ function initLanguage()
 
 function initpage()
 {
-	document.location.href="<% getCfgGeneral(1, "Box_Push_Url"); %>";
+	//document.location.href="<% getCfgGeneral(1, "Box_Push_Url"); %>";
+	document.location.href="http://192.168.169.1:8089/cgi-bin/Ass1auto.cgi";
 
 }
 
@@ -66,9 +67,11 @@ function onInit()
 
 <body BGCOLOR="#FFFFFF" onLoad="onInit()">
     <div>
+    <!--
     <p>
     <span style="font-size:32px;">Wellcom! Wellcom! Wellcom!</span><br />
-    </p>
+    </p> 
+    -->
     </div>
 </body>
 </HTML>

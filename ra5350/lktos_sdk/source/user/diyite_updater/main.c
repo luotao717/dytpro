@@ -10,9 +10,9 @@
 
 
 //当前固件版本
-#define SYSTEM_FIIRMWARE_VERSION	15
+#define SYSTEM_FIIRMWARE_VERSION	17
 //查询新版本接口
-//#define GET_FIRMWARE_VERSION_URL "http://admin.firstte.com:8088/cgi-bin/autoupgrade.cgi"
+#define GET_FIRMWARE_VERSION_URL "http://admin.firstte.com:8088/cgi-bin/autoupgrade.cgi"
 //查询间隔 默认30分钟
 #define TIME_SLEEP_INTERVAL		60*30
 //firmware img本地保存路径
@@ -231,7 +231,7 @@ int getUpgradeVersion(char* firmwareFileUrl)
 	int serverVersion = 0;
 	char buf[512] = {0};
 	char url[512] = {0};
-    char *GET_FIRMWARE_VERSION_URL = nvram_get(RT2860_NVRAM, "Firmware_Update_Url");
+    //char *GET_FIRMWARE_VERSION_URL = nvram_get(RT2860_NVRAM, "Firmware_Update_Url");
 	sprintf(url, "%s?MAC=%s&BoxVersion=%d", GET_FIRMWARE_VERSION_URL, get_wifi_mac(), SYSTEM_FIIRMWARE_VERSION);
 	int ret = http_get(url, buf, 512, 0);
 	if (ret > 0 && ret < 512)

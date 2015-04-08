@@ -10,7 +10,7 @@
 
 #include "nvram.h"
 
-//#define GET_VCODE_URL "http://admin.firstte.com/firste/getboxcode"
+#define GET_VCODE_URL "http://admin.firstte.com/firste/getboxcode"
 //#define GET_VCODE_URL "http://mx1.indoapps1.com/firste/getboxcode"
 #define SD_PATH "/media/sda1"
 #define VCODE_FILE SD_PATH"/vcode.txt"
@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
 {
 	char buf[512] = {0};
 	sprintf(buf, "mac=%s", get_wifi_mac());
-    char *GET_VCODE_URL = nvram_get(RT2860_NVRAM, "Get_Vcode_Url");
+    //char *GET_VCODE_URL = nvram_get(RT2860_NVRAM, "Get_Vcode_Url");
 	int ret = http_post(GET_VCODE_URL, buf, 512);
 	if (ret > 0 && ret < 512)
 	{

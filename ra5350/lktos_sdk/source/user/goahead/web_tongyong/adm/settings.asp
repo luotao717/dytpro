@@ -146,6 +146,7 @@ function rebootClick()
   </tr>
 </form>
 
+<!--
 <form method="post" name="SystemSettings" action="/goform/setSystemSettings">
 <input type="hidden" name="submit-url" value="/adm/settings.asp">
 <tr>
@@ -195,7 +196,7 @@ function rebootClick()
 </td>
 </tr>
 </form>
-
+-->
 <form method="post" name="RebootSystem" action="/goform/RebootSystem">
   <tr>
     <td class="thead"><script>dw(MM_reboot_device_system)</script>:</td>

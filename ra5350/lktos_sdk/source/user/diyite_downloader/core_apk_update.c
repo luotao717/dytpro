@@ -155,8 +155,9 @@ int core_apk_info_update(struct core_apk_info *info)
 		ret = 1;
 		goto end;
 	}
-    char *firstteassistant_update_url = nvram_get(RT2860_NVRAM, "Firstte_Assistant_Update_Url");
-	curl_easy_setopt(handle, CURLOPT_URL, firstteassistant_update_url);
+    //char *firstteassistant_update_url = nvram_get(RT2860_NVRAM, "Firstte_Assistant_Update_Url");
+	curl_easy_setopt(handle, CURLOPT_URL, g_config.core_apk_list_url);
+	//curl_easy_setopt(handle, CURLOPT_URL, firstteassistant_update_url);
 	curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_buff);
 	curl_easy_setopt(handle, CURLOPT_WRITEDATA, &core_apk_info_buff);
 	for (retry = 0; retry < 3; ++retry) {

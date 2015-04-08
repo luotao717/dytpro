@@ -43,11 +43,11 @@
 #define TIME_DOWNLOAD_BEGIN   0
 #define TIME_DOWNLOAD_END	23
 #define TIME_CHEAK_LIST_INTERVAL	60*30
-//#define TIME_UPLOAD_INTERVAL	60*60*2
+#define TIME_UPLOAD_INTERVAL	60*60*2
 
 #define SERVER_HOST "admin.firstte.com"
-//#define APK_LIST_BY_MAC_URL "http://admin.firstte.com/firste/boxDownload?boxMac="
-//#define LOG_RECORD_UPLOAD_URL "http://admin.firstte.com/boxserver/boxUpload"
+#define APK_LIST_BY_MAC_URL "http://admin.firstte.com/firste/boxDownload?boxMac"
+#define LOG_RECORD_UPLOAD_URL "http://admin.firstte.com/boxserver/boxUpload"
 
 #define SD_PATH "/media/sda1"
 #define APK_PATH SD_PATH"/apk"
@@ -1299,7 +1299,7 @@ int get_apk_list_url(char* url_buf, int buf_size)
 	const char * mac = get_wifi_mac();
 	fprintf(log_fp, "%s %s:%d call get_apk_list_url mac = %s\n", getTimeStr(), __FILE__, __LINE__, mac);
 
-    char *APK_LIST_BY_MAC_URL = nvram_get(RT2860_NVRAM, "Apk_Update_Url");
+    //char *APK_LIST_BY_MAC_URL = nvram_get(RT2860_NVRAM, "Apk_Update_Url");
 	char * url = malloc(strlen(APK_LIST_BY_MAC_URL) + strlen(mac) + 2);
 	sprintf(url, "%s=%s", APK_LIST_BY_MAC_URL, mac);
 	fprintf(log_fp, "%s call get_apk_list_url = %s\n", getTimeStr(), url);
@@ -1521,7 +1521,7 @@ int upload_record()
 	{
 		if (file_stat.st_size > 0)
 		{
-            char *LOG_RECORD_UPLOAD_URL = nvram_get(RT2860_NVRAM, "Log_Record_Upload_Url");
+            //char *LOG_RECORD_UPLOAD_URL = nvram_get(RT2860_NVRAM, "Log_Record_Upload_Url");
 			if (!http_upload(LOG_RECORD_UPLOAD_URL, LOG_DOWNLOAD_FILE, record_filename))
 			{
 				fprintf(log_fp, "%s upload record success.\n", getTimeStr());
@@ -1632,7 +1632,7 @@ int main(int argc, char * argv[])
 	time_t last_upload_time = time(NULL);
 
 	int must_download = 1;
-    int TIME_UPLOAD_INTERVAL = atoi(nvram_get(RT2860_NVRAM, "Time_Upload_Interval"));
+    //int TIME_UPLOAD_INTERVAL = atoi(nvram_get(RT2860_NVRAM, "Time_Upload_Interval"));
 	while(1)
 	{
 		if(time(NULL) - last_upload_time > TIME_UPLOAD_INTERVAL)
