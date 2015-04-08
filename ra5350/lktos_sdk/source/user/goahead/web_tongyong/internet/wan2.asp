@@ -342,30 +342,30 @@ function Load_Setting()
 		document.getElementById("pppoe_xkjs").style.display = "none";
 
 	if (l2tpb == 1 && pptpb == 1 && dongle3gb == 1) {
-		document.wanCfg.connectionType.options[3] = new Option("L2TP","L2TP",false, false);	
-		document.wanCfg.connectionType.options[4] = new Option("PPTP","PPTP",false, false);
-		document.wanCfg.connectionType.options[5] = new Option("3G","3G",false, false);
+		document.wanCfg.connectionType.options[2] = new Option("L2TP","L2TP",false, false);	
+		document.wanCfg.connectionType.options[3] = new Option("PPTP","PPTP",false, false);
+		document.wanCfg.connectionType.options[4] = new Option("3G","3G",false, false);
 	}
 	else if (l2tpb == 1 && pptpb == 0 && dongle3gb == 1) {
-		document.wanCfg.connectionType.options[3] = new Option("L2TP","L2TP",false, false);	
-		document.wanCfg.connectionType.options[4] = new Option("3G","3G",false, false);
+		document.wanCfg.connectionType.options[2] = new Option("L2TP","L2TP",false, false);	
+		document.wanCfg.connectionType.options[3] = new Option("3G","3G",false, false);
 	}
 	else if (l2tpb == 0 && pptpb == 1 && dongle3gb == 1) {
-		document.wanCfg.connectionType.options[3] = new Option("PPTP","PPTP",false, false);
-		document.wanCfg.connectionType.options[4] = new Option("3G","3G",false, false);
+		document.wanCfg.connectionType.options[2] = new Option("PPTP","PPTP",false, false);
+		document.wanCfg.connectionType.options[3] = new Option("3G","3G",false, false);
 	}
 	else if (l2tpb == 1 && pptpb == 1) {
-		document.wanCfg.connectionType.options[3] = new Option("L2TP","L2TP",false, false);	
-		document.wanCfg.connectionType.options[4] = new Option("PPTP","PPTP",false, false);
-	}
-	else if (l2tpb == 1) {
-		document.wanCfg.connectionType.options[3] = new Option("L2TP","L2TP",false, false);
-	}
-	else if (pptpb == 1) {
+		document.wanCfg.connectionType.options[2] = new Option("L2TP","L2TP",false, false);	
 		document.wanCfg.connectionType.options[3] = new Option("PPTP","PPTP",false, false);
 	}
+	else if (l2tpb == 1) {
+		document.wanCfg.connectionType.options[2] = new Option("L2TP","L2TP",false, false);
+	}
+	else if (pptpb == 1) {
+		document.wanCfg.connectionType.options[2] = new Option("PPTP","PPTP",false, false);
+	}
 	else if (dongle3gb == 1) {
-		document.wanCfg.connectionType.options[3] = new Option("3G","3G",false, false);
+		document.wanCfg.connectionType.options[2] = new Option("3G","3G",false, false);
 	}
 	
 	if (wan_mode == "STATIC") 
@@ -518,7 +518,7 @@ function syncWithMyPcTime()
   <td><select name="connectionType" onChange="connectionTypeSwitch();">
       <option value="STATIC"><script>dw(MM_staticip)</script></option>
       <option value="DHCP"><script>dw(MM_dhcp)</script></option>
-      <option value="PPPOE"><script>dw(MM_pppoe)</script></option>
+      <!--option value="PPPOE"><script>dw(MM_pppoe)</script></option-->
     </select></td>
 </tr>
 </table>

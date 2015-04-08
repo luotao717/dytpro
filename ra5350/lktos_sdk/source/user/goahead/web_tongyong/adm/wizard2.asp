@@ -336,7 +336,7 @@ function resetForm()
   <td><select name="connectionType" onChange="updateConnectionType()">
   <option value="STATIC"><script>dw(MM_staticip)</script></option>
   <option value="DHCP" selected><script>dw(MM_dhcp)</script></option>
-  <option value="PPPOE"><script>dw(MM_pppoe)</script></option>             
+  <!--option value="PPPOE"><script>dw(MM_pppoe)</script></option-->             
   </select></td>
 </tr>
 <tr id="wan_static_ip" style="display:none">
@@ -397,7 +397,7 @@ function resetForm()
 </tr -->
 <tr id="wlan_ssid">
   <td class="thead"><script>dw(MM_ssid)</script>:</td>
-  <td><% getCfgToHTML(1, "SSID1"); %></td>
+  <td><input type="text" name="ssid" size="32" maxlength="32" readonly="true" value="<% getCfgToHTML(1, "SSID1"); %>"></td>
 </tr>
 <tr id="wlan_bgn"> 
   <td class="thead"><script>dw(MM_network_mode)</script>:</td>
