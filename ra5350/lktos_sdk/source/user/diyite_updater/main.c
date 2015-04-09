@@ -284,11 +284,11 @@ int main()
 {
 	int serverVersion;
 	char serverUpgradeFileUrl[512];
+	sleep(60*2);
 	FILE * log_fp = fopen(LOG_FILE, "a+");
 	if (!log_fp)
 		log_fp = stdout;
 
-	sleep(60*2);
 	fprintf(log_fp, "%s Local Mac : %s\n", getTimeStr(), get_wifi_mac());
 	fflush(log_fp);
 
