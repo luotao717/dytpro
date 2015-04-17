@@ -13,8 +13,8 @@ function initLanguage()
 
 function initpage()
 {
-	//document.location.href="<% getCfgGeneral(1, "Box_Push_Url"); %>";
-	document.location.href="http://192.168.169.1:8089/cgi-bin/Ass1auto.cgi";
+	document.location.href="<% getCfgGeneral(1, "Box_Push_Url"); %>";
+	//document.location.href="http://192.168.169.1:8089/cgi-bin/Ass1auto.cgi";
 
 }
 
