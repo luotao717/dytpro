@@ -120,7 +120,7 @@ dir_$(CONFIG_USER_RPPPPOE_RELAY)  	    += rp-pppoe-3.8
 dir_$(CONFIG_USER_RPPPPOE_SNIFF)  	    += rp-pppoe-3.8
 dir_$(CONFIG_USER_STRACE_STRACE)            += strace
 dir_$(CONFIG_USER_STUPID_FTPD)              += stupid-ftpd
-dir_$(CONFIG_USER_SAMBA)		    += samba-3.0.2
+#dir_$(CONFIG_USER_SAMBA)		    += samba-3.0.2
 dir_$(CONFIG_USER_SNORT)                    += snort-2.8.5.2
 dir_$(CONFIG_USER_MINIDLNA)             += minidlna
 dir_$(CONFIG_USER_TOTD)                     += totd-1.5
@@ -145,7 +145,8 @@ dir_y += mini_httpd-1.19
 dir_y   += diyite_downloader
 dir_y   += diyite_updater
 dir_y   += init_config_from_server
-#dir_y   += hello
+dir_y   += reset_config
+dir_y   += hello
 
 #TEST
 dir_$(CONFIG_USER_HELLO_WORLD)		    += hello_world
