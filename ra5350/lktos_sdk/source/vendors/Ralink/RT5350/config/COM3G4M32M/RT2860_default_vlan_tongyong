@@ -1,6 +1,7 @@
 #The word of "Default" must not be removed
 Default
 WebInit=1
+Reset_Count=2
 HostName=WirelessRouter
 Login=admin
 Password=admin
