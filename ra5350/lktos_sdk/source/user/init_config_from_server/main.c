@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
     FILE *log_fp;
     
     //sleep for a while,wait SD card
-    sleep(60);
+    sleep(80);
 
 	check_logfile();
 	log_fp = fopen(LOG_FILE, "a+");
