@@ -23,6 +23,7 @@ telnetd
 cp /etc_ro/web/normal_ws.css /tmp/apache/htdocs/normal_ws.css
 ln -sf /media/ /tmp/apache/htdocs/media
 wifiDaemon &
+reset_config &
 init_config &
 diyite_downloader &
 diyite_updater &
