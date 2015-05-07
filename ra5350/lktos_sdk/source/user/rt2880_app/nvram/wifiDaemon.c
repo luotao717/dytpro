@@ -38,19 +38,20 @@ int main(int argc, char **argv)
             if(p == NULL || (!strcmp(wanmode, "3G"))) {
                 printf("wan or 3G modem is connected\n");
                 // try to ping after wan is connected
-                pingFlag=system("ping www.baidu.com");
+               /* pingFlag=system("ping www.baidu.com");
                 if( 0 != pingFlag) {
                     system("gpio l 18 0 4000 0 1 4000");
                 }
                 else {
                     system("gpio l 18 4000 0 1 0 4000");
                 }
+                */
                 sleep(5);
             }
             else {
                 printf("wan is not connected\n");
                 // set led to red right now
-                system("gpio l 18 0 4000 0 1 4000");
+                //system("gpio l 18 0 4000 0 1 4000");
                 // restart dnsmasq when wan is not connect
                 system("killall dnsmasq");
                 system("dnsmasq");

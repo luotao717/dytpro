@@ -72,14 +72,15 @@ int main (int argc, char **argv)
    printf("\r\nping flag start=%d\r\n",pingFlag);
    pingFlag=system("ping www.baidu.com");
    printf("\r\nping flag=%d\r\n",pingFlag);
-   
+  /* 
   if( 0 != pingFlag)
   {
   	system("gpio l 18 0 4000 0 1 4000");
   	connected = 0;
   }
-  else
+  else*/
   	system("gpio l 18 4000 0 1 0 4000");
+    
 
 #ifndef NO_GETTEXT
   setlocale(LC_ALL, "");
